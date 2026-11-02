@@ -10,6 +10,13 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  async rewrites() {
+    return [
+      { source: "/version-4", destination: "/" },
+      { source: "/version-4/", destination: "/" },
+      { source: "/version-4/:path*", destination: "/:path*" },
+    ];
+  },
   async headers() {
     // Rules never overlap on X-Robots-Tag: when two rules set the same header for the
     // same URL the later one wins, which previously marked the API as "index, follow"
