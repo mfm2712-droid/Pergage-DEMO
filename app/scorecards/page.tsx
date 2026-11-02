@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Scorecards | Pergage",
+  description: "Private reflection tools for organisational and individual working conditions.",
+};
+
 export default function ScorecardsPage() {
-  return <main className="shell page-intro"><div className="eyebrow">Pergage scorecards</div><h1>Where would you like to start?</h1><p className="lede">Choose a short reflection tool. Your result appears on screen whether or not you share contact details.</p><div className="choice-grid"><a className="choice-card" href="/scorecards/organisational"><span className="choice-index">01</span><h2>For my organisation <span>↗</span></h2><p>For an MD or senior leader reflecting on the conditions that help people stay capable.</p><small>Organisational Readiness · about 3 minutes</small></a><a className="choice-card" href="/scorecards/individual"><span className="choice-index">02</span><h2>For me <span>↗</span></h2><p>For an individual reflecting on the conditions and habits that support good work.</p><small>Individual Readiness · about 3–5 minutes</small></a></div></main>;
+  return <main className="shell page-intro"><div className="eyebrow">Pergage scorecards</div><h1>Where would you like to start?</h1><p className="lede">Choose a short reflection tool. The current questions and scoring are provisional examples while the final scorecards are reviewed.</p><div className="choice-grid"><a className="choice-card" href="/scorecards/organisational"><span className="choice-index">01</span><h2>For my organisation <span>↗</span></h2><p>For an MD or senior leader reflecting on the conditions that help people stay capable.</p><small>Organisational Readiness · about 3 minutes</small></a><a className="choice-card" href="/scorecards/individual"><span className="choice-index">02</span><h2>For me <span>↗</span></h2><p>For an individual reflecting on the conditions that support good work. Not a health assessment.</p><small>Individual Readiness · about 3–5 minutes</small></a></div></main>;
 }
