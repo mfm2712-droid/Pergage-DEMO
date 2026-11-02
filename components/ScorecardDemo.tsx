@@ -204,15 +204,9 @@ export function ScorecardDemo({ type }: { type: ScorecardType }) {
 
   return (
     <>
-      {type === "organisational" ? (
-        <button className="btn-gold btn-gold--block" type="button" onClick={() => { reset(); setOpen(true); }}>
-          <span>Start the Organisational Scorecard</span><i aria-hidden="true">→</i>
-        </button>
-      ) : (
-        <button className="btn-ring" type="button" onClick={() => { reset(); setOpen(true); }}>
-          <span className="btn-ring__dot" aria-hidden="true" />Start the Individual Scorecard
-        </button>
-      )}
+      <button className="btn-gold btn-gold--block" type="button" onClick={() => { reset(); setOpen(true); }}>
+        <span>{type === "organisational" ? "Start the Organisational Scorecard" : "Start the Individual Scorecard"}</span><i aria-hidden="true">→</i>
+      </button>
 
       {dialog && typeof document !== "undefined" ? createPortal(dialog, document.body) : null}
     </>
