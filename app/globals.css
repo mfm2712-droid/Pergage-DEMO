@@ -546,3 +546,7 @@ body.score-demo-open { overflow: hidden; }
   .score-demo__slider-scale { gap: 4px; font-size: 10px; }
   .score-demo__statement { font-size: 35px !important; }
 }
+
+/* Scorecard start buttons: readable label when it wraps on narrower cards (line-height was inherited as 1). */
+.btn-gold--block { text-align: left; min-height: 54px; }
+.btn-gold--block > span { line-height: 1.3; text-wrap: balance; font-size: 14px; font-weight: 500; letter-spacing: .01em; }
