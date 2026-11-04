@@ -558,24 +558,24 @@ body.score-demo-open { overflow: hidden; }
 .btn-gold--block > i { position: absolute; right: 10px; top: 50%; translate: 0 -50%; }
 .btn-gold--block:hover:not(:disabled) > i { translate: 3px -50%; }
 
-/* Header wordmark only: one gilt sweep on load (two round trips), then still.
-   The footer mark is unchanged. The beam is masked to the logo; the glow sits
-   behind it and does not affect layout. */
+/* Header wordmark only: two gilt heartbeats, a short pause, twice on load, then still.
+   The monogram and the footer mark are unchanged. Glow is a static drop-shadow;
+   only opacity animates, and it does not affect layout. */
 .nav .logo { position: relative; }
 .nav .logo img { position: relative; z-index: 1; }
-.nav .logo__glow,
-.nav .logo__sweep { position: absolute; pointer-events: none; }
-.nav .logo__glow {
-  inset: -8px -6px;
-  z-index: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(255, 246, 224, .85), rgba(237, 197, 126, .45) 42%, rgba(162, 122, 60, 0) 72%);
-  filter: blur(5px);
-  opacity: 0;
-}
-.nav .logo__sweep {
+.nav .logo__pulse {
+  position: absolute;
   inset: 0;
   z-index: 2;
-  overflow: hidden;
+  pointer-events: none;
+  clip-path: inset(0 0 0 26%);
+}
+.nav .logo__tint {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: rgba(243, 213, 155, .5);
+  filter: drop-shadow(0 0 3px rgba(255, 246, 224, .95)) drop-shadow(0 0 8px rgba(237, 197, 126, .9));
   -webkit-mask-image: url("/assets/pergage-logo-reverse.svg");
   mask-image: url("/assets/pergage-logo-reverse.svg");
   -webkit-mask-repeat: no-repeat;
@@ -586,66 +586,30 @@ body.score-demo-open { overflow: hidden; }
   mask-size: 100% 100%;
   mask-mode: alpha;
 }
-.nav .logo__beam {
-  position: absolute;
-  top: -50%;
-  left: 0;
-  width: 38%;
-  height: 200%;
-  opacity: 0;
-  background: linear-gradient(
-    100deg,
-    rgba(162, 122, 60, 0) 0%,
-    rgba(174, 132, 68, .25) 12%,
-    rgba(201, 155, 83, 1) 32%,
-    #f3d59b 44%,
-    #fff6e0 50%,
-    #fffef8 53%,
-    #edc57e 62%,
-    rgba(174, 132, 68, .95) 78%,
-    rgba(110, 78, 34, 0) 100%
-  );
-  transform: translate3d(-120%, 0, 0) skewX(-16deg);
-}
 @media (prefers-reduced-motion: no-preference) {
-  .nav .logo__beam {
-    will-change: transform, opacity;
-    animation:
-      logoGoldSweep 3s linear forwards,
-      logoGoldFade 3s linear forwards;
-  }
-  .nav .logo__glow {
+  .nav .logo__tint {
     will-change: opacity;
-    animation: logoGoldGlow 3s linear forwards;
+    animation: logoGoldPulse 4s linear forwards;
   }
-  .nav .logo.is-done .logo__beam,
-  .nav .logo.is-done .logo__glow {
+  .nav .logo.is-done .logo__tint {
     animation: none;
     opacity: 0;
     will-change: auto;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav .logo__glow,
-  .nav .logo__sweep { display: none !important; }
+  .nav .logo__pulse { display: none !important; }
 }
-@keyframes logoGoldSweep {
-  0% { transform: translate3d(-120%, 0, 0) skewX(-16deg); animation-timing-function: cubic-bezier(.42, .05, .58, .95); }
-  25% { transform: translate3d(310%, 0, 0) skewX(-16deg); animation-timing-function: cubic-bezier(.42, .05, .58, .95); }
-  50% { transform: translate3d(-120%, 0, 0) skewX(-16deg); animation-timing-function: cubic-bezier(.42, .05, .58, .95); }
-  75% { transform: translate3d(310%, 0, 0) skewX(-16deg); animation-timing-function: cubic-bezier(.42, .05, .58, .95); }
-  100% { transform: translate3d(-120%, 0, 0) skewX(-16deg); }
-}
-@keyframes logoGoldFade {
-  0% { opacity: 0; }
-  6% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes logoGoldGlow {
-  0% { opacity: 0; }
-  12% { opacity: .72; }
-  46% { opacity: .38; }
-  78% { opacity: .62; }
+@keyframes logoGoldPulse {
+  0% { opacity: 0; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  8% { opacity: 1; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  20% { opacity: 0; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  28% { opacity: 1; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  40% { opacity: 0; }
+  50% { opacity: 0; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  58% { opacity: 1; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  70% { opacity: 0; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  78% { opacity: 1; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  90% { opacity: 0; }
   100% { opacity: 0; }
 }
