@@ -557,3 +557,80 @@ body.score-demo-open { overflow: hidden; }
 .btn-gold--block > span { display: block; max-width: 100%; line-height: 1.2; text-wrap: balance; text-align: center; }
 .btn-gold--block > i { position: absolute; right: 10px; top: 50%; translate: 0 -50%; }
 .btn-gold--block:hover:not(:disabled) > i { translate: 3px -50%; }
+
+/* Whole header logo: one 3s gilt breath from the first frame. Peak near 1.4s,
+   then settle. Footer logo is unchanged. Filters are static. */
+.nav .logo { position: relative; overflow: visible; }
+.nav .logo img { position: relative; z-index: 1; }
+.nav .logo__pulse {
+  position: absolute;
+  inset: -56px -72px;
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+}
+.nav .logo__halo,
+.nav .logo__tint {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.nav .logo__shape {
+  position: absolute;
+  top: 56px;
+  right: 72px;
+  bottom: 56px;
+  left: 72px;
+  background: linear-gradient(180deg, rgba(255, 246, 216, .95) 0%, rgba(242, 210, 122, .78) 42%, rgba(180, 122, 42, .5) 100%);
+  -webkit-mask-image: url("/assets/pergage-logo-reverse.svg");
+  mask-image: url("/assets/pergage-logo-reverse.svg");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  mask-mode: alpha;
+}
+.nav .logo__halo .logo__shape { background: rgba(212, 169, 79, .5); }
+.nav .logo__halo { filter: blur(16px); }
+.nav .logo__tint {
+  filter:
+    drop-shadow(0 -1px 2px rgba(255, 244, 214, .95))
+    drop-shadow(0 2px 3px rgba(110, 70, 16, .75))
+    drop-shadow(0 0 6px rgba(242, 210, 122, .9))
+    drop-shadow(0 0 20px rgba(212, 169, 79, .5));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nav .logo {
+    will-change: transform;
+    animation: logoLift 3s linear forwards;
+  }
+  .nav .logo__halo,
+  .nav .logo__tint {
+    will-change: opacity;
+    animation: logoGlow3d 3s linear forwards;
+  }
+  .nav .logo.is-done,
+  .nav .logo.is-done .logo__halo,
+  .nav .logo.is-done .logo__tint {
+    animation: none;
+    will-change: auto;
+  }
+  .nav .logo.is-done { transform: none; }
+  .nav .logo.is-done .logo__halo,
+  .nav .logo.is-done .logo__tint { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav .logo__pulse { display: none !important; }
+}
+@keyframes logoLift {
+  0% { transform: translateY(0); animation-timing-function: cubic-bezier(.22, .8, .28, 1); }
+  46.7% { transform: translateY(-1px); animation-timing-function: cubic-bezier(.4, .05, .2, 1); }
+  100% { transform: translateY(0); }
+}
+@keyframes logoGlow3d {
+  0% { opacity: 0; animation-timing-function: cubic-bezier(.22, .8, .28, 1); }
+  46.7% { opacity: 1; animation-timing-function: cubic-bezier(.4, .05, .2, 1); }
+  100% { opacity: 0; }
+}
