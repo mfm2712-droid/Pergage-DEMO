@@ -558,13 +558,13 @@ body.score-demo-open { overflow: hidden; }
 .btn-gold--block > i { position: absolute; right: 10px; top: 50%; translate: 0 -50%; }
 .btn-gold--block:hover:not(:disabled) > i { translate: 3px -50%; }
 
-/* Whole header logo: neon tube flicker on load, then a soft fade to rest.
-   Footer logo is unchanged. Filters stay static; only opacity jumps. */
+/* Whole header logo: one 3s gilt breath from the first frame. Peak near 1.4s,
+   then settle. Footer logo is unchanged. Filters are static. */
 .nav .logo { position: relative; overflow: visible; }
 .nav .logo img { position: relative; z-index: 1; }
 .nav .logo__pulse {
   position: absolute;
-  inset: -64px -88px;
+  inset: -56px -72px;
   z-index: 2;
   pointer-events: none;
   overflow: visible;
@@ -577,11 +577,11 @@ body.score-demo-open { overflow: hidden; }
 }
 .nav .logo__shape {
   position: absolute;
-  top: 64px;
-  right: 88px;
-  bottom: 64px;
-  left: 88px;
-  background: #f2d27a;
+  top: 56px;
+  right: 72px;
+  bottom: 56px;
+  left: 72px;
+  background: linear-gradient(180deg, rgba(255, 246, 216, .95) 0%, rgba(242, 210, 122, .78) 42%, rgba(180, 122, 42, .5) 100%);
   -webkit-mask-image: url("/assets/pergage-logo-reverse.svg");
   mask-image: url("/assets/pergage-logo-reverse.svg");
   -webkit-mask-size: 100% 100%;
@@ -592,43 +592,45 @@ body.score-demo-open { overflow: hidden; }
   mask-position: center;
   mask-mode: alpha;
 }
-.nav .logo__halo .logo__shape { background: #d4a94f; }
-.nav .logo__halo { filter: blur(22px); }
+.nav .logo__halo .logo__shape { background: rgba(212, 169, 79, .5); }
+.nav .logo__halo { filter: blur(16px); }
 .nav .logo__tint {
   filter:
-    drop-shadow(0 0 6px #f2d27a)
-    drop-shadow(0 0 18px #d4a94f)
-    drop-shadow(0 0 40px rgba(212, 169, 79, .95));
+    drop-shadow(0 -1px 2px rgba(255, 244, 214, .95))
+    drop-shadow(0 2px 3px rgba(110, 70, 16, .75))
+    drop-shadow(0 0 6px rgba(242, 210, 122, .9))
+    drop-shadow(0 0 20px rgba(212, 169, 79, .5));
 }
 @media (prefers-reduced-motion: no-preference) {
+  .nav .logo {
+    will-change: transform;
+    animation: logoLift 3s linear forwards;
+  }
   .nav .logo__halo,
   .nav .logo__tint {
     will-change: opacity;
-    animation: logoNeon 2.6s linear forwards;
+    animation: logoGlow3d 3s linear forwards;
   }
+  .nav .logo.is-done,
   .nav .logo.is-done .logo__halo,
   .nav .logo.is-done .logo__tint {
     animation: none;
-    opacity: 0;
     will-change: auto;
   }
+  .nav .logo.is-done { transform: none; }
+  .nav .logo.is-done .logo__halo,
+  .nav .logo.is-done .logo__tint { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .nav .logo__pulse { display: none !important; }
 }
-@keyframes logoNeon {
-  0% { opacity: 0; animation-timing-function: steps(1, end); }
-  5% { opacity: 1; animation-timing-function: steps(1, end); }
-  9% { opacity: 0; animation-timing-function: steps(1, end); }
-  13% { opacity: 1; animation-timing-function: steps(1, end); }
-  17% { opacity: 0; animation-timing-function: steps(1, end); }
-  22% { opacity: 1; animation-timing-function: steps(1, end); }
-  36% { opacity: 0; animation-timing-function: steps(1, end); }
-  40% { opacity: 1; animation-timing-function: steps(1, end); }
-  44% { opacity: 0; animation-timing-function: steps(1, end); }
-  48% { opacity: 1; animation-timing-function: steps(1, end); }
-  52% { opacity: 0; animation-timing-function: steps(1, end); }
-  58% { opacity: 1; animation-timing-function: steps(1, end); }
-  74% { opacity: 1; animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
+@keyframes logoLift {
+  0% { transform: translateY(0); animation-timing-function: cubic-bezier(.22, .8, .28, 1); }
+  46.7% { transform: translateY(-1px); animation-timing-function: cubic-bezier(.4, .05, .2, 1); }
+  100% { transform: translateY(0); }
+}
+@keyframes logoGlow3d {
+  0% { opacity: 0; animation-timing-function: cubic-bezier(.22, .8, .28, 1); }
+  46.7% { opacity: 1; animation-timing-function: cubic-bezier(.4, .05, .2, 1); }
   100% { opacity: 0; }
 }

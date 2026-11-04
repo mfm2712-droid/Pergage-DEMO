@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-const NEON_MS = 2600;
+const GLOW_MS = 3000;
 
 /**
- * One-shot neon flicker over the whole header logo.
- * Drops `will-change` once the sign has faded out.
+ * One-shot 3D gilt glow over the whole header logo.
+ * Drops `will-change` once the light has settled.
  */
 export function LogoGoldSweep() {
   const ref = useRef<HTMLSpanElement>(null);
@@ -21,7 +21,7 @@ export function LogoGoldSweep() {
     const layer = pulse.querySelector(".logo__tint");
     const finished = layer?.getAnimations().some((anim) => {
       const name = "animationName" in anim ? anim.animationName : "";
-      return name === "logoNeon" && anim.playState === "finished";
+      return name === "logoGlow3d" && anim.playState === "finished";
     }) ?? false;
     if (finished) {
       settle();
@@ -29,12 +29,12 @@ export function LogoGoldSweep() {
     }
 
     const onEnd = (event: AnimationEvent) => {
-      if (event.animationName !== "logoNeon") return;
+      if (event.animationName !== "logoGlow3d") return;
       settle();
     };
 
     logo.addEventListener("animationend", onEnd);
-    const timer = window.setTimeout(settle, NEON_MS + 700);
+    const timer = window.setTimeout(settle, GLOW_MS + 500);
     return () => {
       logo.removeEventListener("animationend", onEnd);
       window.clearTimeout(timer);
