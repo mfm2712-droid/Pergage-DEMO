@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-const PULSE_MS = 4000;
+const NEON_MS = 2600;
 
 /**
- * One-shot gilt heartbeat on the header wordmark. Opacity only;
- * this drops `will-change` once the two double-beats finish.
+ * One-shot neon flicker over the whole header logo.
+ * Drops `will-change` once the sign has faded out.
  */
 export function LogoGoldSweep() {
   const ref = useRef<HTMLSpanElement>(null);
@@ -21,7 +21,7 @@ export function LogoGoldSweep() {
     const layer = pulse.querySelector(".logo__tint");
     const finished = layer?.getAnimations().some((anim) => {
       const name = "animationName" in anim ? anim.animationName : "";
-      return name === "logoGoldPulse" && anim.playState === "finished";
+      return name === "logoNeon" && anim.playState === "finished";
     }) ?? false;
     if (finished) {
       settle();
@@ -29,12 +29,12 @@ export function LogoGoldSweep() {
     }
 
     const onEnd = (event: AnimationEvent) => {
-      if (event.animationName !== "logoGoldPulse") return;
+      if (event.animationName !== "logoNeon") return;
       settle();
     };
 
     logo.addEventListener("animationend", onEnd);
-    const timer = window.setTimeout(settle, PULSE_MS + 700);
+    const timer = window.setTimeout(settle, NEON_MS + 700);
     return () => {
       logo.removeEventListener("animationend", onEnd);
       window.clearTimeout(timer);

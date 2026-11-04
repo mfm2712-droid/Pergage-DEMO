@@ -558,9 +558,8 @@ body.score-demo-open { overflow: hidden; }
 .btn-gold--block > i { position: absolute; right: 10px; top: 50%; translate: 0 -50%; }
 .btn-gold--block:hover:not(:disabled) > i { translate: 3px -50%; }
 
-/* Header wordmark only: two gilt heartbeats, a short pause, twice on load, then still.
-   The monogram and the footer mark are unchanged. Shadows are static; only
-   opacity and a 1.02 scale animate, and neither affects layout. */
+/* Whole header logo: neon tube flicker on load, then a soft fade to rest.
+   Footer logo is unchanged. Filters stay static; only opacity jumps. */
 .nav .logo { position: relative; overflow: visible; }
 .nav .logo img { position: relative; z-index: 1; }
 .nav .logo__pulse {
@@ -575,8 +574,6 @@ body.score-demo-open { overflow: hidden; }
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: scale(1);
-  transform-origin: 58% 50%;
 }
 .nav .logo__shape {
   position: absolute;
@@ -585,16 +582,15 @@ body.score-demo-open { overflow: hidden; }
   bottom: 64px;
   left: 88px;
   background: #f2d27a;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0 26%, #000 26%), url("/assets/pergage-logo-reverse.svg");
-  mask-image: linear-gradient(90deg, transparent 0 26%, #000 26%), url("/assets/pergage-logo-reverse.svg");
+  -webkit-mask-image: url("/assets/pergage-logo-reverse.svg");
+  mask-image: url("/assets/pergage-logo-reverse.svg");
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  mask-mode: alpha;
 }
 .nav .logo__halo .logo__shape { background: #d4a94f; }
 .nav .logo__halo { filter: blur(22px); }
@@ -607,30 +603,32 @@ body.score-demo-open { overflow: hidden; }
 @media (prefers-reduced-motion: no-preference) {
   .nav .logo__halo,
   .nav .logo__tint {
-    will-change: opacity, transform;
-    animation: logoGoldPulse 4s linear forwards;
+    will-change: opacity;
+    animation: logoNeon 2.6s linear forwards;
   }
   .nav .logo.is-done .logo__halo,
   .nav .logo.is-done .logo__tint {
     animation: none;
     opacity: 0;
-    transform: none;
     will-change: auto;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .nav .logo__pulse { display: none !important; }
 }
-@keyframes logoGoldPulse {
-  0% { opacity: 0; transform: scale(1); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  8% { opacity: 1; transform: scale(1.02); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  20% { opacity: 0; transform: scale(1); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  28% { opacity: 1; transform: scale(1.02); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  40% { opacity: 0; transform: scale(1); }
-  50% { opacity: 0; transform: scale(1); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  58% { opacity: 1; transform: scale(1.02); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  70% { opacity: 0; transform: scale(1); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  78% { opacity: 1; transform: scale(1.02); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  90% { opacity: 0; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1); }
+@keyframes logoNeon {
+  0% { opacity: 0; animation-timing-function: steps(1, end); }
+  5% { opacity: 1; animation-timing-function: steps(1, end); }
+  9% { opacity: 0; animation-timing-function: steps(1, end); }
+  13% { opacity: 1; animation-timing-function: steps(1, end); }
+  17% { opacity: 0; animation-timing-function: steps(1, end); }
+  22% { opacity: 1; animation-timing-function: steps(1, end); }
+  36% { opacity: 0; animation-timing-function: steps(1, end); }
+  40% { opacity: 1; animation-timing-function: steps(1, end); }
+  44% { opacity: 0; animation-timing-function: steps(1, end); }
+  48% { opacity: 1; animation-timing-function: steps(1, end); }
+  52% { opacity: 0; animation-timing-function: steps(1, end); }
+  58% { opacity: 1; animation-timing-function: steps(1, end); }
+  74% { opacity: 1; animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
+  100% { opacity: 0; }
 }
