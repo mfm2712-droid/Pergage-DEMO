@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ConsentBanner } from "../components/ConsentBanner";
+import { LogoGoldSweep } from "../components/LogoGoldSweep";
 import { StructuredData } from "../components/StructuredData";
 import { isIndexable, siteUrl } from "../lib/launch.mjs";
 
@@ -30,7 +31,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <header className="nav" id="top">
           <div className="nav__pill">
             <a className="brand" href="/" aria-label="Pergage — back to top">
-              <span className="logo"><img src="/assets/pergage-logo-reverse.svg" alt="Pergage" width="2851" height="859" /></span>
+              <span className="logo">
+                <img src="/assets/pergage-logo-reverse.svg" alt="Pergage" width="2851" height="859" />
+                <LogoGoldSweep />
+              </span>
             </a>
             <nav className="nav__links" aria-label="Primary">
               <a href="/#approach">Approach</a>
