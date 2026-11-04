@@ -43,7 +43,8 @@ export function LogoGoldSweep() {
 
   return (
     <span className="logo__pulse" ref={ref} aria-hidden="true">
-      <span className="logo__tint" />
+      <span className="logo__halo"><span className="logo__shape" /></span>
+      <span className="logo__tint"><span className="logo__shape" /></span>
     </span>
   );
 }
